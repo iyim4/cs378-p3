@@ -1,6 +1,7 @@
 import './App.css';
 import MenuItem from './components/MenuItem';
 import Header from './components/Header';
+import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 // This imports bootstrap css styles. You can use bootstrap or your own classes 
@@ -84,6 +85,8 @@ const menuItems = [
 
 
 function App() {
+  const [subtotal, setSubtotal] = useState(5);
+
   return (
     <div>
       <Header title="Japanese Menu" />
@@ -92,8 +95,31 @@ function App() {
           <MenuItem item={item} />
         ))}
       </div>
+      {/* <p>heeeeeeeeeeeeey</p>
+      <renderSubtotal /> */}
     </div>
   );
+}
+
+function renderSubtotal () {
+  return (
+    <div class="row">
+      <div class="col-6">
+        <p>Subtotal: ${subtotal}</p>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary btn-sm">Order</button>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary btn-sm">Clear All</button>
+      </div>
+    </div>
+  );
+}
+
+function clearAll () {
+  // do something?!??!
+  return (<div></div>);
 }
 
 export default App;

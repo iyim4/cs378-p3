@@ -6,7 +6,7 @@ const Header = ({ title }) => {
     <div>
       <div class="row align-items-center container-fluid">
         <div class="col-3 d-flex align-items-center">
-          <img src="./logo512.png" alt={"An image of the React logo"} class="img-fluid rounded float-left"/>
+          <img src="./logo512.png" alt={"React logo"} class="img-fluid rounded float-left"/>
         </div>
         <div class="col-9">
           <h1 class="text-center display-1">{ title }</h1>

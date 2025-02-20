@@ -1,7 +1,7 @@
 import './App.css';
 import MenuItem from './components/MenuItem';
 import Header from './components/Header';
-  const [subtotal, setSubtotal] = useState(0);
+import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 // This imports bootstrap css styles. You can use bootstrap or your own classes 
@@ -95,12 +95,12 @@ function App() {
           <MenuItem item={item} />
         ))}
       </div>
-      <renderSubtotal />
+      <renderSubtotal subtotal={subtotal} />
     </div>
   );
 }
 
-function renderSubtotal () {
+function renderSubtotal ({ subtotal }) {
   return (
     <div>
       <div class="row">
