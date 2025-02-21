@@ -2,7 +2,7 @@ import React from 'react';
 
 // This is a functional component that represents a single menu item. 
 // it renders the name, description, image, and price
-const MenuItem = ({ item, itemCounts, setItemCounts, subtotal }) => {
+const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) => {
   return (
     <div class="container-fluid row text-center entry">
       <div class="col-4">
@@ -19,21 +19,18 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal }) => {
             {/* price */}
             <div class="row">
               <div class="col-4">
-                {/* q? how to pass in price variable? */}
-                {/* <BsPlusCircle />  */}
-                <button onClick={() => addItem(item, itemCounts, setItemCounts, subtotal)}> add </button> 
-                {/* <button> <BsPlusCircle /> </button>  */}
-                <p>plus</p>
-              </div>
-              <div class="col-4">
-                <p>{itemCounts[item.id]}, subtotal: {subtotal}</p> 
-              </div>
-              <div class="col-4">
-                <p>minus</p>
+                <button onClick={() => removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> remove </button> 
                 {/* <button> <BsDashCircle /> </button>  */}
               </div>
+              <div class="col-4">
+                <p>{itemCounts[item.id]}</p> 
+              </div>
+              <div class="col-4">
+                {/* <BsPlusCircle />  */}
+                <button onClick={() => addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> add </button> 
+                {/* <button> <BsPlusCircle /> </button>  */}
+              </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm">Add</button>
           </div>
         </div>
       </div>
@@ -41,7 +38,7 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal }) => {
   );
 };
 
-function addItem(item, itemCounts, setItemCounts, subtotal) {
+function addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
   const nextCounts = itemCounts.map((c, i) => {
     if (i === item.id) {
       // Increment the clicked counter
@@ -52,6 +49,31 @@ function addItem(item, itemCounts, setItemCounts, subtotal) {
     }
   });
   setItemCounts(nextCounts);
+  setSubtotal(subtotal + (Math.floor(item.price * 100) / 100));
+}
+
+function removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
+  if (itemCounts[item.id] !== 0) {
+    const nextCounts = itemCounts.map((c, i) => {
+      if (i === item.id) {
+        // Increment the clicked counter
+        return c - 1;
+      } else {
+        // The rest haven't changed
+        return c;
+      }
+    });
+    setItemCounts(nextCounts);
+    // let newSubtotal = ((subtotal - item.price) * 100); // tuncate to 2 decimal places
+    // newSubtotal /= 100;
+    // setSubtotal(Math.floor(newSubtotal));
+    // let newSubtotal = (Math.floor((subtotal - item.price) * 100)) / 100;
+    let newSubtotal = subtotal - (Math.floor(item.price * 100) / 100);
+    if (newSubtotal < 0) {
+      newSubtotal = 0;
+    }
+    setSubtotal(newSubtotal);
+  }
 }
 
 export default MenuItem;

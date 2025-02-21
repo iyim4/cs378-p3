@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+
 // This imports bootstrap css styles. You can use bootstrap or your own classes 
 // by using the className attribute in your elements.
 
@@ -82,9 +83,9 @@ const menuItems = [
     price: 9.99,
   }
 ];
+let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function App() {
-  let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   // initialItemCounts = new Array(menuItems.length + 1).fill(0);
   const [subtotal, setSubtotal] = useState(0);
   const [itemCounts, setItemCounts] = useState(initialItemCounts);
@@ -94,34 +95,42 @@ function App() {
       <Header title="Japanese Menu" />
       <div className="menu">
         {menuItems.map((item) => (
-          <MenuItem item={item} itemCounts={itemCounts} setItemCounts={setItemCounts} subtotal={subtotal} />
+          <MenuItem item={item} itemCounts={itemCounts} setItemCounts={setItemCounts} subtotal={subtotal} setSubtotal={setSubtotal} />
         ))}
       </div>
-      {/* <p>heeeeeeeeeeeeey</p>
-      <renderSubtotal /> */}
+      <RenderSubtotal subtotal={subtotal} setSubtotal={setSubtotal} setItemCounts={setItemCounts} /> 
     </div>
   );
 }
 
-// function renderSubtotal () {
-//   return (
-//     <div class="row">
-//       <div class="col-6">
-//         <p>Subtotal: ${subtotal}</p>
-//       </div>
-//       <div class="col-3">
-//         <button type="button" class="btn btn-primary btn-sm">Order</button>
-//       </div>
-//       <div class="col-3">
-//         <button type="button" class="btn btn-primary btn-sm">Clear All</button>
-//       </div>
-//     </div>
-//   );
-// }
+function RenderSubtotal({ subtotal, setSubtotal, setItemCounts }) {
+  return (
+    <div class="row">
+      <div class="col-6">
+        <p>Subtotal: ${subtotal}</p>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary btn-sm" onClick={() => placeOrder()}>Order</button>
+      </div>
+      <div class="col-3">
+        <button type="button" class="btn btn-primary btn-sm" onClick={() => clearAll(setSubtotal, setItemCounts)}>Clear All</button>
+      </div>
+    </div>
+  );
+}
 
-// function clearAll () {
-//   // do something?!??!
-//   return (<div></div>);
-// }
+function placeOrder () {
+  let message = "Order Placed!\n";
+  // loop through menuitems and counts. to build subtotal
+  // e.g. 1 mac & 1 enchalada
+  // is there a message.append or something?
+  return alert(message);
+  // return (<div></div>);
+}
+
+function clearAll (setSubtotal, setItemCounts) {
+  setItemCounts(initialItemCounts);
+  setSubtotal(0);
+}
 
 export default App;
