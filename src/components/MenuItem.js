@@ -2,7 +2,7 @@ import React from 'react';
 
 // This is a functional component that represents a single menu item. 
 // it renders the name, description, image, and price
-const MenuItem = ({ item }) => {
+const MenuItem = ({ item, itemCounts, setItemCounts, subtotal }) => {
   return (
     <div class="container-fluid row text-center entry">
       <div class="col-4">
@@ -20,24 +20,38 @@ const MenuItem = ({ item }) => {
             <div class="row">
               <div class="col-4">
                 {/* q? how to pass in price variable? */}
-                {/* <button onClick={addPrice price=item.price}> <BsPlusCircle /> </button>  */}
+                {/* <BsPlusCircle />  */}
+                <button onClick={() => addItem(item, itemCounts, setItemCounts, subtotal)}> add </button> 
                 {/* <button> <BsPlusCircle /> </button>  */}
                 <p>plus</p>
               </div>
               <div class="col-4">
-                {/* <p>count</p>  q?*/}
+                <p>{itemCounts[item.id]}, subtotal: {subtotal}</p> 
               </div>
               <div class="col-4">
                 <p>minus</p>
                 {/* <button> <BsDashCircle /> </button>  */}
               </div>
             </div>
-            {/* <button type="button" class="btn btn-primary btn-sm">Add</button> */}
+            <button type="button" class="btn btn-primary btn-sm">Add</button>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+function addItem(item, itemCounts, setItemCounts, subtotal) {
+  const nextCounts = itemCounts.map((c, i) => {
+    if (i === item.id) {
+      // Increment the clicked counter
+      return c + 1;
+    } else {
+      // The rest haven't changed
+      return c;
+    }
+  });
+  setItemCounts(nextCounts);
+}
 
 export default MenuItem;

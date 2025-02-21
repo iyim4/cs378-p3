@@ -83,39 +83,45 @@ const menuItems = [
   }
 ];
 
-
 function App() {
+  let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // initialItemCounts = new Array(menuItems.length + 1).fill(0);
   const [subtotal, setSubtotal] = useState(0);
+  const [itemCounts, setItemCounts] = useState(initialItemCounts);
 
   return (
     <div>
       <Header title="Japanese Menu" />
       <div className="menu">
         {menuItems.map((item) => (
-          <MenuItem item={item} />
+          <MenuItem item={item} itemCounts={itemCounts} setItemCounts={setItemCounts} subtotal={subtotal} />
         ))}
       </div>
-      <renderSubtotal subtotal={subtotal} />
+      {/* <p>heeeeeeeeeeeeey</p>
+      <renderSubtotal /> */}
     </div>
   );
 }
 
-function renderSubtotal ({ subtotal }) {
-  return (
-    <div>
-      <div class="row">
-        <div class="col-6">
-          <p>Subtotal: ${subtotal}</p>
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm">Order</button>
-        </div>
-        <div class="col-3">
-          <button type="button" class="btn btn-primary btn-sm">Clear All</button>
-        </div>
-      </div>
-    </div>
-  );
-}
+// function renderSubtotal () {
+//   return (
+//     <div class="row">
+//       <div class="col-6">
+//         <p>Subtotal: ${subtotal}</p>
+//       </div>
+//       <div class="col-3">
+//         <button type="button" class="btn btn-primary btn-sm">Order</button>
+//       </div>
+//       <div class="col-3">
+//         <button type="button" class="btn btn-primary btn-sm">Clear All</button>
+//       </div>
+//     </div>
+//   );
+// }
+
+// function clearAll () {
+//   // do something?!??!
+//   return (<div></div>);
+// }
 
 export default App;
