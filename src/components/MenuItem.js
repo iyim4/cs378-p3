@@ -1,4 +1,6 @@
 import React from 'react';
+import { BsPlusCircle } from "react-icons/bs";
+import { BsDashCircle } from "react-icons/bs";
 
 // This is a functional component that represents a single menu item. 
 // it renders the name, description, image, and price
@@ -19,16 +21,17 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) =>
             {/* price */}
             <div class="row">
               <div class="col-4">
-                <button onClick={() => removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> remove </button> 
-                {/* <button> <BsDashCircle /> </button>  */}
+                <button class="cart-button" onClick={() => removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> 
+                  <BsDashCircle /> 
+                </button> 
               </div>
               <div class="col-4">
                 <p>{itemCounts[item.id]}</p> 
               </div>
               <div class="col-4">
-                {/* <BsPlusCircle />  */}
-                <button onClick={() => addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> add </button> 
-                {/* <button> <BsPlusCircle /> </button>  */}
+                <button class="cart-button" onClick={() => addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> 
+                  <BsPlusCircle /> 
+                </button> 
               </div>
             </div>
           </div>
@@ -38,31 +41,17 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) =>
   );
 };
 
+// add this item to the cart: update the item count and subtotal
 function addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
-  const nextCounts = itemCounts.map((c, i) => {
-    if (i === item.id) {
-      // Increment the clicked counter
-      return c + 1;
-    } else {
-      // The rest haven't changed
-      return c;
-    }
-  });
+  const nextCounts = itemCounts.map((c, i) => { return c + (i === item.id); });
   setItemCounts(nextCounts);
   setSubtotal(subtotal + (Math.floor(item.price * 100) / 100));
 }
 
+// remove this item to the cart: update the item count and subtotal
 function removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
   if (itemCounts[item.id] !== 0) {
-    const nextCounts = itemCounts.map((c, i) => {
-      if (i === item.id) {
-        // Increment the clicked counter
-        return c - 1;
-      } else {
-        // The rest haven't changed
-        return c;
-      }
-    });
+    const nextCounts = itemCounts.map((c, i) => { return c - (i === item.id); });
     setItemCounts(nextCounts);
     // let newSubtotal = ((subtotal - item.price) * 100); // tuncate to 2 decimal places
     // newSubtotal /= 100;

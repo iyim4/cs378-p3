@@ -16,3 +16,7 @@
 .menu {
   padding: 2%;
 }
+.cart-button {
+  background: none;
+  border: none;
+}
