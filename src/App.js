@@ -86,7 +86,6 @@ const menuItems = [
 let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function App() {
-  // initialItemCounts = new Array(menuItems.length + 1).fill(0);
   const [subtotal, setSubtotal] = useState(0);
   const [itemCounts, setItemCounts] = useState(initialItemCounts);
 
@@ -107,7 +106,7 @@ function RenderSubtotal({ subtotal, setSubtotal, setItemCounts }) {
   return (
     <div class="row">
       <div class="col-6">
-        <p>Subtotal: ${subtotal}</p>
+        <p>Subtotal: ${subtotal.toFixed(2)}</p>
       </div>
       <div class="col-3">
         <button type="button" class="btn btn-primary btn-sm" onClick={() => placeOrder()}>Order</button>

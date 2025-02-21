@@ -45,7 +45,10 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) =>
 function addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
   const nextCounts = itemCounts.map((c, i) => { return c + (i === item.id); });
   setItemCounts(nextCounts);
-  setSubtotal(subtotal + (Math.floor(item.price * 100) / 100));
+
+  let newSubtotal = Math.round((subtotal + item.price) * 100) / 100;
+  newSubtotal = parseFloat(newSubtotal.toFixed(2));
+  setSubtotal(newSubtotal);
 }
 
 // remove this item to the cart: update the item count and subtotal
@@ -53,14 +56,9 @@ function removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
   if (itemCounts[item.id] !== 0) {
     const nextCounts = itemCounts.map((c, i) => { return c - (i === item.id); });
     setItemCounts(nextCounts);
-    // let newSubtotal = ((subtotal - item.price) * 100); // tuncate to 2 decimal places
-    // newSubtotal /= 100;
-    // setSubtotal(Math.floor(newSubtotal));
-    // let newSubtotal = (Math.floor((subtotal - item.price) * 100)) / 100;
-    let newSubtotal = subtotal - (Math.floor(item.price * 100) / 100);
-    if (newSubtotal < 0) {
-      newSubtotal = 0;
-    }
+
+    let newSubtotal = subtotal - (Math.round(item.price * 100) / 100);
+    newSubtotal = parseFloat(newSubtotal.toFixed(2));
     setSubtotal(newSubtotal);
   }
 }
