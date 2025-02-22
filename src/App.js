@@ -4,7 +4,6 @@ import Header from './components/Header';
 import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-
 // This imports bootstrap css styles. You can use bootstrap or your own classes 
 // by using the className attribute in your elements.
 
@@ -83,7 +82,7 @@ const menuItems = [
     price: 9.99,
   }
 ];
-let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let initialItemCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function App() {
   const [subtotal, setSubtotal] = useState(0);
@@ -97,19 +96,19 @@ function App() {
           <MenuItem item={item} itemCounts={itemCounts} setItemCounts={setItemCounts} subtotal={subtotal} setSubtotal={setSubtotal} />
         ))}
       </div>
-      <RenderSubtotal subtotal={subtotal} setSubtotal={setSubtotal} setItemCounts={setItemCounts} /> 
+      <RenderSubtotal subtotal={subtotal} setSubtotal={setSubtotal} itemCounts={itemCounts} setItemCounts={setItemCounts} /> 
     </div>
   );
 }
 
-function RenderSubtotal({ subtotal, setSubtotal, setItemCounts }) {
+function RenderSubtotal({ subtotal, setSubtotal, itemCounts, setItemCounts }) {
   return (
     <div class="row">
       <div class="col-6">
         <p>Subtotal: ${subtotal.toFixed(2)}</p>
       </div>
       <div class="col-3">
-        <button type="button" class="btn btn-primary btn-sm" onClick={() => placeOrder()}>Order</button>
+        <button type="button" class="btn btn-primary btn-sm" onClick={() => placeOrder(itemCounts)}>Order</button>
       </div>
       <div class="col-3">
         <button type="button" class="btn btn-primary btn-sm" onClick={() => clearAll(setSubtotal, setItemCounts)}>Clear All</button>
@@ -118,13 +117,17 @@ function RenderSubtotal({ subtotal, setSubtotal, setItemCounts }) {
   );
 }
 
-function placeOrder () {
+function placeOrder (itemCounts) {
   let message = "Order Placed!\n";
-  // loop through menuitems and counts. to build subtotal
-  // e.g. 1 mac & 1 enchalada
-  // is there a message.append or something?
+  itemCounts.forEach((count, index) => {
+    if (count > 0) {
+      message += (count + " " + menuItems[index].title + " ");
+    }
+  });
+  if (message.length == 14) {
+    message = "No items in cart";
+  }
   return alert(message);
-  // return (<div></div>);
 }
 
 function clearAll (setSubtotal, setItemCounts) {

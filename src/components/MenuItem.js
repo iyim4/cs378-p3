@@ -26,7 +26,7 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) =>
                 </button> 
               </div>
               <div class="col-4">
-                <p>{itemCounts[item.id]}</p> 
+                <p>{itemCounts[item.id - 1]}</p> 
               </div>
               <div class="col-4">
                 <button class="cart-button" onClick={() => addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal)}> 
@@ -43,7 +43,7 @@ const MenuItem = ({ item, itemCounts, setItemCounts, subtotal, setSubtotal }) =>
 
 // add this item to the cart: update the item count and subtotal
 function addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
-  const nextCounts = itemCounts.map((c, i) => { return c + (i === item.id); });
+  const nextCounts = itemCounts.map((c, i) => { return c + (i === (item.id - 1)); });
   setItemCounts(nextCounts);
 
   let newSubtotal = Math.round((subtotal + item.price) * 100) / 100;
@@ -53,8 +53,8 @@ function addItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
 
 // remove this item to the cart: update the item count and subtotal
 function removeItem(item, itemCounts, setItemCounts, subtotal, setSubtotal) {
-  if (itemCounts[item.id] !== 0) {
-    const nextCounts = itemCounts.map((c, i) => { return c - (i === item.id); });
+  if (itemCounts[item.id - 1] !== 0) {
+    const nextCounts = itemCounts.map((c, i) => { return c - (i === (item.id - 1)); });
     setItemCounts(nextCounts);
 
     let newSubtotal = subtotal - (Math.round(item.price * 100) / 100);
