@@ -124,7 +124,7 @@ function placeOrder (itemCounts) {
       message += (count + " " + menuItems[index].title + " ");
     }
   });
-  if (message.length == 14) {
+  if (message.length === 14) {
     message = "No items in cart";
   }
   return alert(message);
